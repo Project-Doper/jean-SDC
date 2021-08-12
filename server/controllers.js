@@ -14,14 +14,19 @@ module.exports = {
   },
   reviews: {
     getReviews: (req, res) => {
-      db.pool.query("SELECT * FROM reviews limit(4)", (err, data) => {
+      // product_id using req.params
+      var queryStr = `SELECT * FROM reviews WHERE product_id = ${req.params.id}`;
+      db.pool.query(queryStr, (err, data) => {
         res.status(200).send(data.rows);
-        db.pool.end();
+        // db.pool.end();
       });
     },
 
     getMetadata: (req, res) => {
-
+      var queryStr = `SELECT * FROM characteristic_reviews WHERE review_id = ${req.params.id}`;
+      db.pool.query(queryStr, (err, data) => {
+        res.status(200).send(data.rows);
+      })
     },
 
     addNewReview: (req, res) => {
