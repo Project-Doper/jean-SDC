@@ -1,17 +1,4 @@
-// const mongoose = require('mongoose');
-// const mongoUri = 'mongodb://localhost/blogmodo';
-
-// mongoose.connect(mongoUri, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   useCreateIndex: true,
-// });
-
-// const db = mongoose.connection;
-
-// module.exports = db;
-
-const config = require("./config/config.js");
+const config = require("../config/config.js");
 
 const { Pool, Client } = require("pg");
 
