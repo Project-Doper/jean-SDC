@@ -73,18 +73,14 @@ module.exports = {
           var characteristicValues = Object.values(req.body.characteristics);
 
           for (var i = 0; i < characteristicKeys.length; i++) {
-
             var innerCharQueryStr = `INSERT INTO characteristic_reviews (characteristic_id, review_id, value) VALUES ($1, $2, $3)`;
-
-            var innerCharArray = [characeristicKeys[i], data, characteristicValues[i]];
+            var innerCharArray = [characteristicKeys[i], data, characteristicValues[i]];
 
             db.client.query(innerCharQueryStr, innerCharArray)
           }
 
           for (var i = 0; i < req.body.photos.length; i++) {
-            
             var revPhotosQueryStr = `INSERT INTO reviews_photos (review_id, url) VALUES ($1, $2)`;
-  
             var photoValues = [data, req.body.photos[i]];
 
             db.client.query(revPhotosQueryStr, photoValues);
@@ -111,10 +107,17 @@ module.exports = {
 
     updateHelpfulCount: (req, res) => {
 
-      var updateQueryStr = `UPDATE reviews SET helpfulness = helpfulness + 1 WHERE id = ${req.params.id}`;
+      console.log('req.params: ', req.params);
+
+      var updateQueryStr = `UPDATE reviews SET helpfulness = helpfulness + 1 WHERE id = ${req.params.review_id}`;
 
       db.pool.query(updateQueryStr, (err, data) => {
-        res.status(200).send(data.rows);
+        if (err) {
+          console.log(err);
+          return;
+        } else {
+          res.status(200).send(data.rows);
+        }
       })
 
     }
